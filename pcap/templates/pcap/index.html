@@ -1,6 +1,12 @@
 {% extends 'pcap/layout.html' %}
 
 {% block content %}
+{#    <input type="file">#}
 
-    <input type="file">
+    <ul>
+        {% for pcap in pcaps %}
+            <li>{{ pcap }}</li>
+        {% endfor %}
+
+    </ul>
 {% endblock %}
