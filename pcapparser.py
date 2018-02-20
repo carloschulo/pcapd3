@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, subprocess, csv, operator
+import os, subprocess, csv, operator, re
 
 # argu = "tshark -r sample.pcap -T fields -E separator=, -E quote=d -e tcp.dstport -e ip.addr -e tcp.stream | sort | uniq | sort > output.csv"
 #
@@ -28,13 +28,23 @@ import os, subprocess, csv, operator
 #     for line in sort:
 #         print(line)
 
-filepath = "tezt.txt"
-# file = open(filepath, 'r')
-# lines = file.readlines()
-# file.close()
 
-with open(filepath) as f:
-    for line in f:
-        print(line.strip())
+x = []
+dic = {}
+def handlelist(index, input):
+    x.append(input[0])
+    print(index, input)
 
+
+def handlefile():
+    filepath = "tezt.txt"
+    with open(filepath) as f:
+        for index, line in enumerate(f):
+            packet = line.splitlines()
+            newpacket = re.split(r'\t+', packet[0].rstrip('\t'))
+            handlelist(index, newpacket)
+
+
+handlefile()
+# print(x)
 
