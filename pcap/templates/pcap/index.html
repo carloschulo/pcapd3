@@ -3,10 +3,16 @@
 {% block content %}
 {#    <input type="file">#}
 
+    {% if pcaps %}
     <ul>
         {% for pcap in pcaps %}
             <li>{{ pcap }}</li>
         {% endfor %}
 
     </ul>
+    {% else %}
+        <h3>No PCAP uploaded yet</h3>
+        <a href="/upload" class="btn btn-primary">Click to upload</a>
+    {% endif %}
+
 {% endblock %}
