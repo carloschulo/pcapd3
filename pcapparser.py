@@ -31,9 +31,17 @@ import os, subprocess, csv, operator, re
 
 x = []
 dic = {}
+newDic = {}
+
 def handlelist(index, input):
-    x.append(input[0])
-    print(index, input)
+    if input[0] != '':
+        # if index ==
+        x.append(input)
+        # dic[index] = input
+
+        # print(index, input)
+    else:
+        return
 
 
 def handlefile():
@@ -45,6 +53,23 @@ def handlefile():
             handlelist(index, newpacket)
 
 
-handlefile()
+# def splitlist(ls):
+#     listlen = ls.__len__()
+#     for elem in ls:
+#         if elem[0] ==
+#     print(ls)
+
+
+# handlefile()
+# splitlist(x)
 # print(x)
+
+with open('tcp-conv.txt', 'r') as in_file:
+    stripped = (line.strip() for line in in_file)
+    lines = (line.split() for line in stripped if line)
+    with open('tcp-conv.csv', 'w') as out_file:
+        writer = csv.writer(out_file)
+        # writer.writerow(('tcp.stream', 'ip.src', 'tcp.srcport', 'ip.dst', 'tcp.dstport', 'frame.protocols'))
+        for line in lines:
+            writer.writerow(line)
 
