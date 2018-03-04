@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, subprocess, csv, operator, re
+import os, subprocess, csv, operator, re, pandas as pd
 
 # argu = "tshark -r sample.pcap -T fields -E separator=, -E quote=d -e tcp.dstport -e ip.addr -e tcp.stream | sort | uniq | sort > output.csv"
 #
@@ -68,6 +68,8 @@ with open('tcp-conv.txt', 'r') as in_file:
     stripped = (line.strip() for line in in_file)
     # remove arrows
     removearr = (line.replace('<->', '') for line in stripped if line)
+    # strip ports from IP address
+    # getports = (line.replace(':', ' ') for line in removearr if line)
     lines = (line.split() for line in removearr if line)
     with open('tcp-conv.csv', 'w') as out_file:
         writer = csv.writer(out_file)
@@ -75,3 +77,8 @@ with open('tcp-conv.txt', 'r') as in_file:
         for line in lines:
             writer.writerow(line)
 
+df = pd.read_csv('tcp-conv.csv')
+df['Total Packet'] = round(df['Total Packet'] * .1, 5)
+df.drop(['Packet B to A Frames', 'Packet B to A Bytes', 'Packet A to B Frames', 'Packet A to B Bytes', 'Total Bytes', 'Relative Start', 'Duration'], axis=1, inplace=True)
+df.rename(columns={'Address A': 'source', 'Address B': 'target', 'Total Packet': 'value'}, inplace=True)
+df.to_csv('new-tcp.csv', index=False)
