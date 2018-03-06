@@ -16,4 +16,7 @@ if settings.DEBUG:
         url(r'pcap_file/(?P<path>.*)$', serve,{
           'document_root': settings.MEDIA_ROOT,
         }),
+        url(r'csvfiles/(?P<path>.*)$', serve, {
+            'document_root': settings.CSV_ROOT
+        })
     ]

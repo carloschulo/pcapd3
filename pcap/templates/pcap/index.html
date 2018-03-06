@@ -1,18 +1,29 @@
 {% extends 'pcap/layout.html' %}
+{% block title %} Upload PCAP FIle {% endblock %}
 
 {% block content %}
-{#    <input type="file">#}
-
     {% if pcaps %}
-    <ul>
-        {% for pcap in pcaps %}
-            <li>{{ pcap }}</li>
-        {% endfor %}
+        {#    <ul>#}
+        {#        {% for pcap in pcaps %}#}
+        {#            <li>{{ pcap }}</li>#}
+        {#        {% endfor %}#}
+        {#     </ul>#}
+        <a href="/upload" class="btn btn-primary">Click to upload another PCAP</a>
+        <div class="container visualselection">
+            <div class="row">
+                <a class="col" href="/sankey">View a Sankey Diagram of the TCP Conversations</a>
+                <a class="col" href="/sankey-udp">View a Sankey Diagram of the UDP Conversations</a>
+                <div class="w-100"></div>
+                <div class="col">Column</div>
+                <div class="col">Column</div>
+            </div>
+        </div>
 
-    </ul>
     {% else %}
-        <h3>No PCAP uploaded yet</h3>
-        <a href="/upload" class="btn btn-primary">Click to upload</a>
+        <header class="container text-center">
+            <h3>No PCAP uploaded yet</h3>
+        </header>
+        <a href="/upload" class="btn btn-primary">Click to upload a PCAP</a>
     {% endif %}
 
 {% endblock %}

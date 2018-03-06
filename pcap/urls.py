@@ -6,5 +6,6 @@ urlpatterns = [
     path('', views.IndexView.as_view(), name='index'),
     # path('upload/', views.AddPcap.as_view(), name='upload'),
     path('upload/', views.upload, name='upload'),
-    path('visualize/', views.visualizepcap, name='visualizer'),
+    path('sankey/', views.sankey, name='sankey'),
+    path('sankey-udp/', views.sankeyudp, name='sankeyudp'),
 ]
