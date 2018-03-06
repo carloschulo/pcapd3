@@ -26,7 +26,7 @@
 
         .sankey-container {
             display: flex;
-            width: 560px;
+            width: 860px;
             justify-content: space-between
         }
     </style>
@@ -42,7 +42,6 @@
         <svg></svg>
     </div>
 
-    {#    <a href="{% url 'index' %}">go home</a>#}
     <script>
         // set the dimensions and margins of the graph
         var margin = {
@@ -51,8 +50,8 @@
                 bottom: 10,
                 left: 10
             },
-            width = 560 - margin.left - margin.right,
-            height = 540 - margin.top - margin.bottom;
+            width = 860 - margin.left - margin.right,
+            height = {{ file_length }} * 18 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
         var svg = d3.select("svg")
@@ -74,7 +73,7 @@
             .extent([
                 [1, 1],
                 [width - 1, height - 6]
-            ]);
+            ])
 
         var link = svg.append("g")
             .attr("class", "links")
@@ -89,7 +88,7 @@
             .attr("font-size", 10)
             .selectAll("g");
 
-        d3.csv("{% url 'index' %}/csvfiles/{{ proto }}-sankey.csv", function (error, data) {
+        d3.csv("{% url 'index' %}csvfiles/{{ proto }}-sankey.csv", function (error, data) {
             if (error) throw error;
 
             //set up graph in same style as original example but empty
