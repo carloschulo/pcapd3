@@ -64,6 +64,7 @@ def convparser(txt_file, proto):
                 writer.writerow(line)
 
     df = pd.read_csv(f'pcap/csvfiles/{proto}-init-sankey.csv')
+    df.sort_values(["Relative Start"], inplace=True, ascending=True)
     df['Total Packet'] = round(df['Total Packet'] * .1, 5)
     df.drop(
         ['Packet B to A Frames', 'Packet B to A Bytes', 'Packet A to B Frames', 'Packet A to B Bytes', 'Total Bytes',
