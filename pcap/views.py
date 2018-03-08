@@ -6,8 +6,11 @@ from .forms import UploadForm
 from django.http import HttpResponseRedirect, HttpResponse
 from.parser import tsharkpcap
 
+# Global vars
 length = {}
 pcapfilename = ''
+
+
 # upload view
 def upload(request):
     form = UploadForm(request.POST or None, request.FILES or None)
@@ -28,15 +31,22 @@ def upload(request):
 
 def sankey(request):
     file_length = str(length["tcp_len"])
-    print('TCP len is ' + file_length)
+    # print('TCP len is ' + file_length)
     return render(request, 'pcap/sankey.html', {'proto': 'tcp', 'file_length': file_length})
 
 
 def sankeyudp(request):
     file_length = str(length["udp_len"])
-    print('UDP len is ' + file_length)
+    # print('UDP len is ' + file_length)
     return render(request, 'pcap/sankey.html', {'proto': 'udp', 'file_length': file_length})
 
+
+def tabletcp(request):
+    return render(request, 'pcap/table.html', {'proto': 'tcp'})
+
+
+def tableucp(request):
+    return render(request, 'pcap/table.html', {'proto': 'udp'})
 
 # Homepage
 class IndexView(generic.ListView):
@@ -47,6 +57,7 @@ class IndexView(generic.ListView):
         name = str(Pcap.objects.last())
         return name
 
+    # need this to check if there are any pcaps uploaded in the DB
     def uploads(self):
         return Pcap.objects.all()
 

@@ -8,4 +8,6 @@ urlpatterns = [
     path('upload/', views.upload, name='upload'),
     path('sankey/', views.sankey, name='sankey'),
     path('sankey-udp/', views.sankeyudp, name='sankeyudp'),
+    path('table-tcp/', views.tabletcp, name='tabletcp'),
+    path('table-udp/', views.tableucp, name='tableucp'),
 ]
