@@ -21,8 +21,9 @@ def upload(request):
         filename = str(file)
         global pcapfilename
         pcapfilename = filename
+        filelocation = './pcap_file/' + filename
         # handle uploaded file
-        conv_len = tsharkpcap(file, filename)
+        conv_len = tsharkpcap(file, filename, filelocation)
         global length
         length = conv_len
         return HttpResponseRedirect('/')
