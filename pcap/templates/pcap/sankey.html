@@ -33,6 +33,7 @@
 
     <header class="center">
         <h2 class="text-uppercase">{{ proto }} Conversation pairs</h2>
+        <p>Hover over each path for more information.</p>
     </header>
     <div class="container">
         <main class="sankey-container">
@@ -142,7 +143,9 @@
 
             link.append("title")
                 .text(function (d) {
-                    return "Source IP: " + d.source.name + " → " + "Target IP: " + d.target.name + "\n" + format(d.value);
+                    var srcname = d.source.name.replace(/:(?!.*:)/, ', Source Port: ');
+                    var trgtname = d.target.name.replace(/:(?!.*:)/, ', Target Port: ');
+                    return "Source IP: " + srcname + " → " + "Target IP: " + trgtname + "\n" + format(d.value);
                 });
 
             node = node
