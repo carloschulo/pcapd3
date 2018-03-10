@@ -10,25 +10,35 @@ def tsharkpcap(pcapfile, filename, filelocation):
     # used for sankey
     tcpconv_txtname = f'tcpconv-{name[0]}.txt'
     udpconv_txtname = f'udpconv-{name[0]}.txt'
+    ipconv_txtname = f'ippconv-{name[0]}.txt'
+
     tcptshark = f'tshark -n -r {filelocation} -T fields -E header=y -e tcp.stream -e ip.src -e tcp.srcport -e ip.dst -e tcp.dstport -e frame.protocols | sort -un | grep -a "tcp"> pcap/tsharkout/{tcp_outputtxtname}'
     udptshark = f'tshark -n -r {filelocation} -T fields -E header=y -e udp.stream -e ip.src -e udp.srcport -e ip.dst -e udp.dstport -e frame.protocols | sort -un | grep -a "udp" > pcap/tsharkout/{udp_outputtxtname}'
 
     tcpconv = f'tshark -r {filelocation} -qz conv,tcp | grep -v "================================================================================" | grep -v "TCP Conversations" | grep -v "Filter:<No Filter>" | grep -v "|       <-      | |       ->      | |     Total     |    Relative    |   Duration   |" | grep -v "| Frames  Bytes | | Frames  Bytes | | Frames  Bytes |      Start     |              |" > pcap/tsharkout/{tcpconv_txtname}'
+
     udpconv = f'tshark -r {filelocation} -qz conv,udp | grep -v "================================================================================" | grep -v "UDP Conversations" | grep -v "Filter:<No Filter>" | grep -v "|       <-      | |       ->      | |     Total     |    Relative    |   Duration   |" | grep -v "| Frames  Bytes | | Frames  Bytes | | Frames  Bytes |      Start     |              |" > pcap/tsharkout/{udpconv_txtname}'
+
+    ipconv = f'tshark -r {filelocation} -qz conv,ip | grep -v "================================================================================" | grep -v "IPv4 Conversations" | grep -v "Filter:<No Filter>" | grep -v "|       <-      | |       ->      | |     Total     |    Relative    |   Duration   |" | grep -v "| Frames  Bytes | | Frames  Bytes | | Frames  Bytes |      Start     |              |" > pcap/tsharkout/{ipconv_txtname}'
+
     os.system(tcptshark)
     os.system(udptshark)
     os.system(tcpconv)
     os.system(udpconv)
+    os.system(ipconv)
 
     tcp_outfile = f'pcap/tsharkout/{tcp_outputtxtname}'
     udp_outfile = f'pcap/tsharkout/{udp_outputtxtname}'
 
     tcpconv_outfile = f'pcap/tsharkout/{tcpconv_txtname}'
     udpconv_outfile = f'pcap/tsharkout/{udpconv_txtname}'
+    ipconv_outfile = f'pcap/tsharkout/{ipconv_txtname}'
 
     # needed for chart viz
     # chartparser(tcpconv_outfile, 'tcp')
     # chartparser(udpconv_outfile, 'udp')
+
+    convparser(ipconv_outfile, 'ip')
 
     # needed for sankey viz
     tcp_len = convparser(tcpconv_outfile, 'tcp')

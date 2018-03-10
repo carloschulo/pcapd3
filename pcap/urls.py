@@ -10,4 +10,5 @@ urlpatterns = [
     path('sankey-udp/', views.sankeyudp, name='sankeyudp'),
     path('table-tcp/', views.tabletcp, name='tabletcp'),
     path('table-udp/', views.tableucp, name='tableucp'),
+    path('force-dir-graph/', views.forcedirgraph, name='forcegraph'),
 ]

@@ -49,6 +49,9 @@ def tabletcp(request):
 def tableucp(request):
     return render(request, 'pcap/table.html', {'proto': 'udp'})
 
+def forcedirgraph(request):
+    return render(request, 'pcap/forcegraph.html', {'proto': 'ip'})
+
 # Homepage
 class IndexView(generic.ListView):
     template_name = 'pcap/index.html'
