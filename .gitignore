@@ -106,5 +106,3 @@ ENV/
 sample.pcap
 sample.json
 output.json
-
-pcap_file/
