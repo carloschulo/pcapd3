@@ -1,4 +1,4 @@
-# PCAP visualizer using Tshark, Pandas, and D3 JS
+# PCAP visualizer using Django, Tshark, Pandas, and D3 JS
 
 Required:
 - Django 2.0.2
