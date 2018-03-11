@@ -64,13 +64,3 @@ class IndexView(generic.ListView):
     # need this to check if there are any pcaps uploaded in the DB
     def uploads(self):
         return Pcap.objects.all()
-
-
-# not using this class view atm
-class AddPcap(CreateView):
-    model = Pcap
-    fields = ['pcap_file']
-
-
-
-

@@ -103,6 +103,10 @@ ENV/
 .idea/
 
 *.sqlite3
-sample.pcap
-sample.json
-output.json
+*.pcap
+*.csv
+ippconv-pcap.txt
+tcp-pcap.txt
+tcpconv-pcap.txt
+udp-pcap.txt
+udpconv-pcap.txt

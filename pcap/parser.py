@@ -1,4 +1,4 @@
-import os, csv, pandas as pd, re
+import os, csv, pandas as pd
 
 
 def tsharkpcap(pcapfile, filename, filelocation):
@@ -34,10 +34,6 @@ def tsharkpcap(pcapfile, filename, filelocation):
     udpconv_outfile = f'pcap/tsharkout/{udpconv_txtname}'
     ipconv_outfile = f'pcap/tsharkout/{ipconv_txtname}'
 
-    # needed for chart viz
-    # chartparser(tcpconv_outfile, 'tcp')
-    # chartparser(udpconv_outfile, 'udp')
-
     convparser(ipconv_outfile, 'ip')
 
     # needed for sankey viz
@@ -49,28 +45,6 @@ def tsharkpcap(pcapfile, filename, filelocation):
     parsepcap(udp_outfile, name[0], 'udp')
 
     return {"tcp_len": tcp_len, "udp_len": udp_len}
-
-
-# def chartparser(txt_file, proto):
-#     with open(txt_file, 'r') as in_file:
-#         stripped = (line.strip() for line in in_file)
-#         # remove arrows
-#         removearr = (line.replace('<->', '') for line in stripped if line)
-#         # match last colon in IP or Mac address
-#         # strip ports from IP address :(?!.*:)
-#         getports = (re.sub(":(?!.*:)", ' ', line) for line in removearr if line)
-#         lines = (line.split() for line in getports if line)
-#         with open(f'pcap/csvfiles/{proto}-chart.csv', 'w') as out_file:
-#             writer = csv.writer(out_file)
-#             writer.writerow(
-#                 ('Address A', 'Port A', 'Address B', 'Port B', 'Packet B to A Frames', 'Packet B to A Bytes',
-#                  'Packet A to B Frames', 'Packet A to B Bytes', 'Total Packet', 'Total Bytes',
-#                  'Relative Start', 'Duration'))
-#             for line in lines:
-#                 writer.writerow(line)
-#     df = pd.read_csv(f'pcap/csvfiles/{proto}-chart.csv')
-#     df.sort_values(["Relative Start"], inplace=True, ascending=True)
-#     df.to_csv(f'pcap/csvfiles/{proto}-chart.csv', index=False)
 
 
 def parsepcap(txtfile, outputtxtname, proto):
