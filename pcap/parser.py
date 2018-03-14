@@ -20,7 +20,7 @@ def tsharkpcap(pcapfile, filename, filelocation):
     # used for sankey
     tcpconv_txtname = f'tcpconv-{name[0]}.txt'
     udpconv_txtname = f'udpconv-{name[0]}.txt'
-    ipconv_txtname = f'ippconv-{name[0]}.txt'
+    ipconv_txtname = f'ipconv-{name[0]}.txt'
 
     tcptshark = f'tshark -n -r {filelocation} -T fields -E header=y -e tcp.stream -e ip.src -e tcp.srcport -e ip.dst -e tcp.dstport -e frame.protocols | sort -un | grep -a "tcp"> pcap/tsharkout/{tcp_outputtxtname}'
     udptshark = f'tshark -n -r {filelocation} -T fields -E header=y -e udp.stream -e ip.src -e udp.srcport -e ip.dst -e udp.dstport -e frame.protocols | sort -un | grep -a "udp" > pcap/tsharkout/{udp_outputtxtname}'
