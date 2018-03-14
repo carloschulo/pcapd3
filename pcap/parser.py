@@ -1,5 +1,15 @@
 import os, csv, pandas as pd
 
+protocols = {
+    80: 'HTTP',
+    443: 'HTTPS',
+    53: 'DNS',
+    22: 'SSH',
+    20: 'FTP',
+    67: 'DHCP',
+    68: 'DHCP',
+}
+
 
 def tsharkpcap(pcapfile, filename, filelocation):
     name = filename.split('.')
@@ -57,6 +67,19 @@ def parsepcap(txtfile, outputtxtname, proto):
             # writer.writerow(('tcp.stream', 'ip.src', 'tcp.srcport', 'ip.dst', 'tcp.dstport', 'frame.protocols'))
             for line in lines:
                 writer.writerow(line)
+
+    df = pd.read_csv(csvfile)
+    df.columns = ['Stream', 'Source', 'Source Port', 'Destination', 'Destination Port', 'Application Protocol']
+    columns = df.ix[:, 4]
+    count = 0
+    for port in columns:
+        if port in protocols:
+            df.ix[count, 5] = protocols[port]
+            count += 1
+        else:
+            df.ix[count, 5] = "Other"
+            count += 1
+    df.to_csv(csvfile, index=False)
 
 
 def convparser(txt_file, proto):
