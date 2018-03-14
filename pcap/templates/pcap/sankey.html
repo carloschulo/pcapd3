@@ -44,6 +44,16 @@
     </div>
 
     <script>
+        var protocols = {
+            '80': 'HTTP',
+            '443': 'HTTPS',
+            '53': 'DNS',
+            '22': 'SSH',
+            '20': 'FTP',
+            '67': 'DHCP',
+            '68': 'DHCP'
+        };
+
         // set the dimensions and margins of the graph
         var margin = {
                 top: 10,
@@ -52,7 +62,9 @@
                 left: 10
             },
             width = 860 - margin.left - margin.right,
-            height = {{ file_length }} * 18 - margin.top - margin.bottom;
+            height =
+        {{ file_length }} *
+        18 - margin.top - margin.bottom;
 
         // append the svg object to the body of the page
         var svg = d3.select("svg")
@@ -143,9 +155,26 @@
 
             link.append("title")
                 .text(function (d) {
-                    var srcname = d.source.name.replace(/:(?!.*:)/, ', Source Port: ');
-                    var trgtname = d.target.name.replace(/:(?!.*:)/, ', Target Port: ');
-                    return "Source IP: " + srcname + " → " + "Target IP: " + trgtname + "\n" + format(d.value);
+                    var srcname = d.source.name.replace(/:(?!.*:)/, ' Source Port: ');
+                    var srcsplit = srcname.split('Source Port: ')
+                    var trgtname = d.target.name.replace(/:(?!.*:)/, ' Target Port: ');
+                    var trgtsplit = trgtname.split('Target Port: ');
+                    var appProto;
+                    Object.keys(protocols).forEach(function (port, index) {
+                        //console.log(typeof port)
+                        //console.log(typeof trgtsplit[1])
+                        console.log(Object.values(protocols)[index])
+                        if(port === trgtsplit[1]){
+                            appProto = Object.values(protocols)[index]
+                            //console.log(appProto)
+                        }
+                        else{
+                            return null
+                        }
+                    })
+
+                    if(appProto === undefined) appProto = "Other";
+                    return "Source IP: " + srcname + " → " + "Target IP: " + trgtname + "\n" + format(d.value) + "\n" + "Application Protocol is " + appProto;
                 });
 
             node = node
